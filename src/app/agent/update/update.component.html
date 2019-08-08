@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-6 m-b-5">
+
+                <div class="form-actions m-t-40">
+
+
+                    <button type="button" class="btn btn-outline-info" (click)="backToList()">Liste des agents</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="entityUpdate" class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier un agent</h4>
+                <h6 class="card-subtitle"></h6>
+            </div>
+            <hr class="m-t-0">
+            <form class="form-horizontal r-separator" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+                <div class="card-body">
+                    <!--                     <h4 class="card-title">Information de connexion</h4>
+ -->
+
+
+                    <div class="form-group row p-b-15">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">
+                            Pseudo</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="pseudo" [(ngModel)]="entityUpdate.pseudoAgent" #pseudo="ngModel"
+                                class="form-control" id="inputEmail3" placeholder="Pseudo" required>
+                            <div *ngIf="pseudo.invalid && (pseudo.dirty || pseudo.touched)" class="alert alert-danger">
+                                <div *ngIf="pseudo.errors.required"> Ce champ est obligatoire. </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row p-b-15">
+                        <label for="password" class="col-sm-3 text-right control-label col-form-label">
+                            Mot de passe</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="password" #password="ngModel"
+                                [(ngModel)]="entityUpdate.passwordAgent" class="form-control" id="password"
+                                placeholder="mot de passe" required>
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="password.errors.required"> Ce champ est obligatoire. </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-body bg-light">
+                    <!--                     <h4 class="card-title m-t-10 p-b-20">Information personnelle</h4>
+ -->
+                    <div class="form-group row p-b-15">
+                        <label for="nom" class="col-sm-3 text-right control-label col-form-label">Nom Agent</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="nom" #nom="ngModel" [(ngModel)]="entityUpdate.nomAgent"
+                                class="form-control" id="nom" placeholder="Nom agent" required>
+                            <div *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="alert alert-danger">
+                                <div *ngIf="nom.errors.required"> Ce champ est obligatoire. </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row p-b-15">
+                        <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Prénom Agent
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="prenom" #prenom="ngModel" [(ngModel)]="entityUpdate.prenomAgent"
+                                class="form-control" id="prenomn" placeholder="Prénom agent" required>
+                            <div *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="alert alert-danger">
+                                <div *ngIf="prenom.errors.required"> Ce champ est obligatoire. </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row row p-b-15">
+                        <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Date de naissance
+                        </label>
+                        <div class="col-sm-6">
+
+                            <div class="input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp1"
+                                    [(ngModel)]="entityUpdate.dateNaisAgent" ngbDatepicker
+                                    [footerTemplate]="footerTemplate" #d1="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        type="button"><i class="fa fa-calendar"></i></button>
+                                </div>
+
+                            </div>
+
+                            <ng-template #footerTemplate>
+                                <hr class="my-0">
+
+                                <button class="btn btn-secondary btn-sm m-2 float-right"
+                                    (click)="d1.close()">Close</button>
+                            </ng-template>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row p-b-15">
+                        <label for="contact" class="col-sm-3 text-right control-label col-form-label">Contact
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="contact" [(ngModel)]="entityUpdate.contactAgent" #contact="ngModel"
+                                class="form-control" id="contact" placeholder="Contact" required>
+                            <div *ngIf="contact.invalid && (contact.dirty || contact.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="contact.errors.required"> Ce champ est obligatoire. </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row p-b-15">
+                        <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Adresse
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="adresse" [(ngModel)]="entityUpdate.adresseAgent" #adresse="ngModel"
+                                class="form-control" id="adresse" placeholder="Adresse" required>
+                        </div>
+                        <div *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="alert alert-danger">
+                            <div *ngIf="adresse.errors.required"> Ce champ est obligatoire. </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row p-b-15">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Genre</label>
+                        <div class="col-sm-9">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" value="F"
+                                    [(ngModel)]="entityUpdate.sexeAgent" id="customControlValidation2"
+                                    name="radio-stacked" required>
+                                <label class="custom-control-label" for="customControlValidation2">Féminin</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="customControlValidation3"
+                                    name="radio-stacked" value="M" [(ngModel)]="entityUpdate.sexeAgent" required>
+                                <label class="custom-control-label" for="customControlValidation3">Masculin</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row p-b-15">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Selectionner
+                            la photo</label>
+                        <div class="col-sm-9">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" accept="image/*" (change)="changeListener($event)"
+                                        name="photoProfile" class="custom-file-input" id="inputGroupFile01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Choisir une photo</label>
+                                </div>
+                            </div>
+                            <img src="{{entityUpdate.photoProfil}}" class="rounded-circle" width="304" height="236"
+                                alt="">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="form-group m-b-0 text-right">
+                        <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                        <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

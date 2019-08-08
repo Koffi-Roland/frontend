@@ -1,0 +1,6 @@
+{
+    "/api": {
+        "target": "http://smbackin.nogss.com",
+        "secure": false
+    }
+}

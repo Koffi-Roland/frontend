@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-sm-8 col-lg-8">
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-6 m-b-5">
+
+                <div class="form-actions m-t-40">
+
+
+                    <button type="button" class="btn btn-outline-info" (click)="backToEdit()">Ajouter une
+                        boutique</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des boutiques
+                </h4>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th>Libellé Boutique</th>
+                                <th>Contact Boutique</th>
+                                <th>Adresse Boutique</th>
+                                <th>Adresse Gps </th>
+                                <th>Option </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let boutique of allBoutiques | paginate: {id:'boutique', itemsPerPage: 10, currentPage: p }">
+                                <td>{{boutique.libBoutique}}</td>
+                                <td>{{boutique.contactBoutique}}</td>
+                                <td>{{boutique.adresseBoutique}}</td>
+                                <td>{{boutique.adresseGpsBoutique}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-circle"
+                                        (click)="goToUpdate(boutique.id)"><i class="fa fa-edit"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger btn-circle"
+                                        (click)="onDelete(boutique.id)"><i class="fa fa-trash"></i>
+                                    </button></td>
+                            </tr>
+
+
+                            <!--     <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true"
+                                    previousLabel="Précédent" screenReaderPaginationLabel="Pagination"
+                                    screenReaderPageLabel="page" directionLinks="true" nextLabel="Suivant">
+                                </pagination-controls> -->
+
+
+                            <!--   <pagination-controls id="some_id" (pageChange)="pageChanged($event)" maxSize="9"
+                                    directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous"
+                                    nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                    screenReaderCurrentLabel="You're on page">
+                                </pagination-controls> -->
+                        </tbody>
+                    </table>
+                    <span *ngIf="!allBoutiques?.length">Pas de donnée(s)</span>
+                    <div class="list" *ngIf="allBoutiques?.length">
+
+                        <pagination-controls id="boutique" (pageChange)="p = $event" previousLabel="Précédent"
+                            nextLabel="Suivant"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,155 @@
+<!-- row -->
+<div class="row">
+    <div class="col-sm-8 col-lg-8">
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+    </div>
+    <div class="row">
+        <div class="col-md-6 m-b-5">
+
+
+
+            <button type="button" *ngIf="!doCreate" (click)="init()" class="btn btn-outline-info">Ajouter un
+                droit</button>
+
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="card" *ngIf="doCreate">
+            <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+
+                <div class="card-body">
+                    <h4 class="card-title">Ajout</h4>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputLibelle" class="control-label col-form-label">Libellé Droit
+                                </label>
+                                <input type="text" class="form-control" name="libelle" [(ngModel)]="entity.libDroit"
+                                    placeholder="Libellé">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputDescription" class="control-label col-form-label">Description
+                                    Droit</label>
+                                <textarea class="form-control" name="description" [(ngModel)]="entity.descriptionDroit"
+                                    id="exampleTextarea10" rows="3" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="action-form">
+                        <div class="form-group m-b-0 text-left">
+                            <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                            <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card" *ngIf="doUpdate">
+            <form (ngSubmit)="onUpdate()" #f="ngForm" novalidate>
+
+                <div class="card-body">
+                    <h4 class="card-title">Modification</h4>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputLibelle" class="control-label col-form-label">Libellé Droit
+                                </label>
+                                <input type="text" name="libelle" [(ngModel)]="entityUpdate.libDroit"
+                                    class="form-control" placeholder="Libellé" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputDescription" class="control-label col-form-label">Description
+                                    Droit</label>
+                                <textarea name="descriptionDroit" [(ngModel)]="entityUpdate.descriptionDroit"
+                                    class="form-control" id="exampleTextarea10" rows="3" placeholder="Description"
+                                    required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="action-form">
+                        <div class="form-group m-b-0 text-left">
+                            <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                            <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des droits
+                </h4>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Description</th>
+                                <th>Option </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let droit of allDroits| paginate: { id: 'droit',itemsPerPage: 5, currentPage: p }">
+                                <td>{{droit.libDroit}}</td>
+                                <td>{{droit.descriptionDroit}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-info btn-circle"><i class="fa fa-edit"
+                                            (click)="forUpdate(droit)"></i>
+                                    </button>
+
+                                    <button type="button" (click)="onDelete(droit.id)"
+                                        class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            <span *ngIf="!allDroits?.length">Pas de donnée(s)</span>
+
+                        </tbody>
+                    </table>
+                    <div class="list" *ngIf="allDroits?.length">
+                        <pagination-controls id="droit" (pageChange)="p = $event" previousLabel="Précédent"
+                            nextLabel="Suivant"></pagination-controls>
+
+
+
+                        <!--  <pagination-controls id="droit" (pageChange)="p = $event" autoHide="true" responsive="true"
+                            previousLabel="Précédent" screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page" directionLinks="true" nextLabel="Suivant">
+                        </pagination-controls> -->
+
+
+                        <!--   <pagination-controls id="some_id" (pageChange)="pageChanged($event)" maxSize="9"
+                            directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous"
+                            nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end row -->

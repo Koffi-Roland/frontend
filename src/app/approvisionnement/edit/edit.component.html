@@ -1,0 +1,308 @@
+<div class="row">
+    <div class="col-sm-8 col-lg-8">
+
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+
+    </div>
+    <div class="col-12">
+
+        <div class="card">
+
+            <ngb-tabset #tabset="ngbTabset" [justify]="justified">
+                <ngb-tab title="Approvisionnement">
+                    <ng-template ngbTabContent>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 m-b-5">
+
+                                    <div class="form-actions m-t-40">
+
+
+                                        <button type="button" class="btn btn-outline-info">Liste des
+                                            approvisionnements</button>
+                                        <button type="button" class="btn btn-outline-info"
+                                            (click)="backToEditBoutique()">Ajouter une
+                                            boutique</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  <h6 class="card-subtitle"></h6> -->
+                        </div>
+                        <hr>
+                        <form class="form-horizontal" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+                            <div class="card-body">
+
+
+                                <div class="form-group row">
+                                    <label for="nom" class="col-sm-3 text-right control-label col-form-label">
+                                        Boutique
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="exampleFormControlSelect1"
+                                            [(ngModel)]="entity.idBoutique" name="idBoutique">
+                                            <option value="" selected disabled>Choisir une boutique</option>
+                                            <option [ngValue]="idBoutique" *ngFor="let idBoutique of allBoutiques">
+                                                {{idBoutique.libBoutique}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Date
+                                        aprrovisionnement
+                                    </label>
+                                    <div class="col-sm-6">
+
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp1"
+                                                [(ngModel)]="entity.DteApprov" ngbDatepicker
+                                                [footerTemplate]="footerTemplate1" #d1="ngbDatepicker" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                                    type="button"><i class="fa fa-calendar"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <ng-template #footerTemplate1>
+                                        <hr class="my-0">
+
+                                        <button class="btn btn-secondary btn-sm m-2 float-right"
+                                            (click)="d1.close()">Close</button>
+                                    </ng-template>
+                                </div>
+
+
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="form-group m-b-0 text-right">
+                                    <button type="submit"
+                                        class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                                    <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab id="tab-exemple">
+                    <ng-template ngbTabTitle>Exemplaires</ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 m-b-5">
+
+                                    <div class="form-actions m-t-40">
+
+
+                                        <button type="button" class="btn btn-outline-info">Ajouter produit</button>
+                                        <button type="button" class="btn btn-outline-info"
+                                            (click)="backToEditBoutique()">Ajouter une
+                                            gamme</button>
+
+                                        <button type="button" class="btn btn-outline-info"
+                                            (click)="backToEditBoutique()">Ajouter un
+                                            type</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  <h6 class="card-subtitle"></h6> -->
+                        </div>
+                        <hr>
+                        <form class="form-horizontal" (ngSubmit)="goToFinal()" #f="ngForm" novalidate>
+                            <div class="card-body">
+
+                                <!-- gamme -->
+                                <div class="form-group row">
+                                    <label for="nom" class="col-sm-3 text-right control-label col-form-label">
+                                        Gamme
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="_gamme"
+                                            name="gamme">
+                                            <option value="" selected disabled>Choisir une gamme</option>
+                                            <option [ngValue]="gamme" *ngFor="let gamme of allGammes">
+                                                {{gamme.libGamme}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="nom" class="col-sm-3 text-right control-label col-form-label">
+                                        Type
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="_type"
+                                            name="type">
+                                            <option value="" selected disabled>Choisir une type</option>
+                                            <option [ngValue]="type" *ngFor="let type of allTypes">
+                                                {{type.libType}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="nom" class="col-sm-3 text-right control-label col-form-label">
+                                        Produit
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="exampleFormControlSelect1"
+                                            [(ngModel)]="entityExemplaire.produit" name="produit">
+                                            <option value="" selected disabled>Choisir un produit</option>
+                                            <option [ngValue]="produit" *ngFor="let produit of allProducts">
+                                                {{produit.libProduit}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Date
+                                        fabrication
+                                    </label>
+                                    <div class="col-sm-6">
+
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp2"
+                                                [(ngModel)]="entityExemplaire.datefabrication" ngbDatepicker
+                                                [footerTemplate]="footerTemplate2" #d2="ngbDatepicker" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                                    type="button"><i class="fa fa-calendar"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <ng-template #footerTemplate2>
+                                        <hr class="my-0">
+
+                                        <button class="btn btn-secondary btn-sm m-2 float-right"
+                                            (click)="d1.close()">Close</button>
+                                    </ng-template>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="prenom" class="col-sm-3 text-right control-label col-form-label">Date
+                                        peremption
+                                    </label>
+                                    <div class="col-sm-6">
+
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp3"
+                                                [(ngModel)]="entityExemplaire.dateperemption" ngbDatepicker
+                                                [footerTemplate]="footerTemplate3" #d3="ngbDatepicker" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()"
+                                                    type="button"><i class="fa fa-calendar"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <ng-template #footerTemplate3>
+                                        <hr class="my-0">
+
+                                        <button class="btn btn-secondary btn-sm m-2 float-right"
+                                            (click)="d1.close()">Close</button>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="form-group m-b-0 text-right">
+                                    <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Passer à
+                                        la finalisation</button>
+                                    <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </ngb-tab>
+
+
+
+                <ngb-tab id="tab-final">
+                    <ng-template ngbTabTitle>Tableau de finalisation</ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-5">
+                                    <div class="form-group row p-b-15">
+                                        <label for="inputEmail3"
+                                            class="col-sm-3 text-right control-label col-form-label">
+                                            Barcode</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" [(ngModel)]="entityExemplaire.barcode" name="barcode"
+                                                class="form-control" id="inputEmail3" placeholder="Barcode" required>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="bg-info text-white">
+                                                <tr>
+                                                    <th>Produit</th>
+                                                    <th>Barcode</th>
+                                                    <!--                                                     <th>Prix</th>
+ -->
+                                                    <th>Date fabrication</th>
+                                                    <th>Date approvisionnement</th>
+                                                    <!--                                                     <th>Option </th>
+ -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let info of arrayTab ">
+                                                    <td>{{info.produit?.libProduit}}</td>
+                                                    <td>{{entityExemplaire.barcode}}</td>
+                                                    <td>{{info.datefabrication| date: 'dd/MM/yyyy'}}</td>
+                                                    <td>{{info.dateperemption| date: 'dd/MM/yyyy'}}</td>
+
+
+
+
+                                                    <td>
+                                                </tr>
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  <h6 class="card-subtitle"></h6> -->
+
+
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group m-b-0 text-right">
+                                <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                                <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </ngb-tab>
+
+            </ngb-tabset>
+
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-sm-8 col-lg-8">
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-6 m-b-5">
+
+                <div class="form-actions m-t-40">
+
+
+                    <button type="button" class="btn btn-outline-info" (click)="backToEdit()">Ajouter un
+                        produit</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des produits
+                </h4>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Capital Total Produit</th>
+                                <th>Capital Unitaire Produit</th>
+                                <th>Interet Total Produit</th>
+                                <th>Interet Unitaire Produit</th>
+                                <th>Pourcentage Reduction</th>
+                                <th>Image</th>
+
+
+                                <th>Option </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let product of allProducts | paginate: {id:'produit', itemsPerPage: 10, currentPage: p }">
+                                <td>{{product.libProduit}}</td>
+                                <td>{{product.capitalTotalProduit}}</td>
+                                <td>{{product.capitalUnitaireProduit}}</td>
+                                <td>{{product.interetTotalProduit}}</td>
+                                <td>{{product.interetUnitaireProduit}}</td>
+                                <td>{{product.pourcRedProduit}}</td>
+                                <td> <img src="{{product.image}}" class="img-thumbnail" width="35" height="20" alt="">
+                                </td>
+
+
+                                <td>
+                                    <button type="button" (click)="goToUpdate(product.id)"
+                                        class="btn btn-info btn-circle"><i class="fa fa-edit"></i>
+                                    </button>
+
+                                    <button type="button" (click)="onDelete(product.id)"
+                                        class="btn btn-danger btn-circle"><i class="fa fa-trash"></i>
+                                    </button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <span *ngIf="!allProducts?.length">Pas de données</span>
+
+                    <div class="list" *ngIf="allProducts?.length">
+                        <pagination-controls id="produit" (pageChange)="p = $event" previousLabel="Précédent"
+                            nextLabel="Suivant"></pagination-controls>
+
+                        <!--   <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true"
+                            previousLabel="Précédent" screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page" directionLinks="true" nextLabel="Suivant">
+                        </pagination-controls> -->
+
+
+                        <!--   <pagination-controls id="some_id" (pageChange)="pageChanged($event)" maxSize="9"
+                            directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous"
+                            nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,152 @@
+<!-- row -->
+<div class="row">
+    <div class="col-sm-8 col-lg-8">
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+    </div>
+    <div class="row">
+        <div class="col-md-6 m-b-5">
+
+
+
+            <button type="button" *ngIf="!doCreate" (click)="init()" class="btn btn-outline-info">Ajouter une
+                gamme</button>
+
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="card" *ngIf="doCreate">
+            <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+
+                <div class="card-body">
+                    <h4 class="card-title">Ajout</h4>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputLibelle" class="control-label col-form-label">Libellé gamme</label>
+                                <input type="text" name="libelle" [(ngModel)]="entity.libGamme" id="__libGamme"
+                                    class="form-control" placeholder="Libellé" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputDescription" class="control-label col-form-label">Description
+                                    gamme</label>
+                                <textarea name="description" [(ngModel)]="entity.descriptionGamme" class="form-control"
+                                    id="description" rows="3" placeholder="Description" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="action-form">
+                        <div class="form-group m-b-0 text-left">
+                            <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                            <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card" *ngIf="doUpdate">
+            <form (ngSubmit)="onUpdate()" #f="ngForm" novalidate>
+
+                <div class="card-body">
+                    <h4 class="card-title">Modification</h4>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputLibelle" class="control-label col-form-label">Libellé gamme</label>
+                                <input type="text" name="Libelle" [(ngModel)]="entityUpdate.libGamme" id="_libelle"
+                                    class="form-control" placeholder="Libellé" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="inputDescription" class="control-label col-form-label">Description
+                                    gamme</label>
+                                <textarea name="description" [(ngModel)]="entityUpdate.descriptionGamme"
+                                    class="form-control" id="_description" rows="3" placeholder="Description"
+                                    required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="action-form">
+                        <div class="form-group m-b-0 text-left">
+                            <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light">Save</button>
+                            <button type="reset" class="btn btn-dark waves-effect waves-light">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des gammes
+                </h4>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Description</th>
+                                <th>Option </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let gamme of allGammes | paginate: {id: 'id_gamme', itemsPerPage: 5, currentPage: p } ">
+                                <td>{{gamme.libGamme}}</td>
+                                <td>{{gamme.descriptionGamme}}</td>
+                                <td>
+                                    <button type="button" (click)="forUpdate(gamme)" class="btn btn-info btn-circle"><i
+                                            class="fa fa-edit"></i>
+                                    </button>
+
+                                    <button type="button" (click)="onDelete(gamme.id)" class="btn btn-danger btn-circle"
+                                        style="size:15px;"><i class="fa fa-trash"></i>
+                                    </button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <span *ngIf="!allGammes?.length">Pas de donnée(s)</span>
+
+                    <div class="list" *ngIf="allGammes?.length">
+                        <pagination-controls id="id_gamme" (pageChange)="p = $event" previousLabel="Précédent"
+                            nextLabel="Suivant"></pagination-controls>
+
+
+                        <!--   <pagination-controls id="id_gamme" (pageChange)="p = $event" autoHide="true" responsive="true"
+                            previousLabel="Précédent" screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page" directionLinks="true" nextLabel="Suivant">
+                        </pagination-controls> -->
+
+
+                        <!--   <pagination-controls id="some_id" (pageChange)="pageChanged($event)" maxSize="9"
+                            directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous"
+                            nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end row -->

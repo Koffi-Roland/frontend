@@ -1,0 +1,372 @@
+<div class="row">
+    <!-- Column -->
+    <div class="col-sm-8 col-lg-8">
+        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+        </ngb-alert>
+        <ngb-alert *ngIf="dangerMessage" type="danger" (close)="dangerMessage = null">{{ dangerMessage }}
+        </ngb-alert>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-6 m-b-5">
+
+                <div class="form-actions m-t-40">
+                    <button type="button" class="btn btn-info m-r-5" (click)="openModal(templateGamme)">
+                        Ajouter une gamme</button>
+                    <button type="button" class="btn btn-info m-r-5" (click)="openModal(templateType)">Ajouter un type
+                        produit</button>
+                    <button type="button" class="btn btn-outline-info" (click)="backToList()">Liste des
+                        produits</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate enctype="multipart/form-data">
+                    <div class="form-body">
+
+                        <!--/row-->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="card-title m-t-40">Ajouter un produit</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered td-padding">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        [(ngModel)]="entity.gamme" name="gamme">
+                                                        <option value="" selected disabled>Choisir une gamme</option>
+                                                        <option [ngValue]="gamme" *ngFor="let gamme of allGammes">
+                                                            {{gamme.libGamme}}
+                                                        </option>
+
+                                                    </select> </td>
+                                                <td>
+                                                    <select class="form-control" id="exampleFormControlSelect1"
+                                                        [(ngModel)]="entity.type" name="type">
+                                                        <option value="" selected disabled>Choisir un type produit
+                                                        </option>
+                                                        <option [ngValue]="types" *ngFor="let types of allTypes">
+                                                            {{types.libType}}</option>
+
+                                                    </select> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Libellé produit</label>
+                                                    <input type="text" class="form-control" name="libelle"
+                                                        placeholder="Libellé produit" name="libelle"
+                                                        [(ngModel)]="entity.libProduit" #libelle="ngModel" required>
+                                                    <div *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="libelle.errors.required"> Ce champ est obligatoire.
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <label>Description produit</label>
+
+                                                    <textarea placeholder="Description du produit ..."
+                                                        [(ngModel)]="entity.descriptionProduit" id="description"
+                                                        name="description" #description="ngModel" class="form-control"
+                                                        rows="2" required>
+                                                    </textarea>
+                                                    <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="description.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Capital du produit</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="capital du produit" id="capitalpro"
+                                                        name="capitalpro" [(ngModel)]="entity.capitalTotalProduit"
+                                                        #capitalpro="ngModel" required>
+                                                    <div *ngIf="capitalpro.invalid && (capitalpro.dirty || capitalpro.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="capitalpro.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <label>Capital unitaire du produit</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="capital unitaire produit" id="capital_u"
+                                                        name="capital_u" [(ngModel)]="entity.capitalUnitaireProduit"
+                                                        #capital_u="ngModel" required>
+                                                    <div *ngIf="capital_u.invalid && (capital_u.dirty || capital_u.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="capital_u.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Interet total produit</label>
+
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Interet total produit" id="interet" name="interet"
+                                                        [(ngModel)]="entity.interetTotalProduit" #interet="ngModel"
+                                                        required>
+                                                    <div *ngIf="interet.invalid && (interet.dirty || interet.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="interet.errors.required"> Ce champ est obligatoire.
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <label>Interet unitaire produit</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Interet unitaire produit" id="interet_u"
+                                                        name="interet_u" [(ngModel)]="entity.interetUnitaireProduit"
+                                                        #interet_u="ngModel" required>
+                                                    <div *ngIf="interet_u.invalid && (interet_u.dirty || interet_u.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="interet_u.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Pourcentage reduction</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Pourcentage Reduction" id="pourcentage_rec"
+                                                        name="pourcentage_rec" [(ngModel)]="entity.pourcRedProduit"
+                                                        #pourcentage_rec="ngModel" required>
+                                                    <div *ngIf="pourcentage_rec.invalid && (pourcentage_rec.dirty || pourcentage_rec.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="pourcentage_rec.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <label>Quantité en stock</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Quantité en stock" id="qtestock" name="qtestock"
+                                                        [(ngModel)]="entity.qteStock" #qtestock="ngModel" required>
+                                                    <div *ngIf="qtestock.invalid && (qtestock.dirty || qtestock.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="qtestock.errors.required"> Ce champ est obligatoire.
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Quantité avant alert</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Quantité avant alert" id="qtestock_alert"
+                                                        name="qtestock_alert" [(ngModel)]="entity.qteAvAlertFinStock"
+                                                        #qtestock_alert="ngModel" required>
+                                                    <div *ngIf="qtestock_alert.invalid && (qtestock_alert.dirty || qtestock_alert.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="qtestock_alert.errors.required"> Ce champ est
+                                                            obligatoire. </div>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <label>Nbre Jours alert avant peremption</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nbre Jours alert avant peremption" id="nbre"
+                                                        name="nbre" [(ngModel)]="entity.nbreJoursAlertAvPeremption"
+                                                        #nbre="ngModel" required>
+                                                    <div *ngIf="nbre.invalid && (nbre.dirty || nbre.touched)"
+                                                        class="alert alert-danger">
+                                                        <div *ngIf="nbre.errors.required"> Ce champ est obligatoire.
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label> Date fin stock</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp1"
+                                                            [(ngModel)]="entity.finStock" ngbDatepicker
+                                                            [footerTemplate]="footerTemplate1" #d1="ngbDatepicker"
+                                                            required>
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-secondary calendar"
+                                                                (click)="d1.toggle()" type="button"><i
+                                                                    class="fa fa-calendar"></i></button>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <ng-template #footerTemplate1>
+                                                        <hr class="my-0">
+
+                                                        <button class="btn btn-secondary btn-sm m-2 float-right"
+                                                            (click)="d1.close()">Close</button>
+                                                    </ng-template>
+                                                </td>
+                                                <td>
+                                                    <label> Date premption</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp2"
+                                                            [(ngModel)]="entity.perimed" ngbDatepicker
+                                                            [footerTemplate]="footerTemplate2" #d2="ngbDatepicker"
+                                                            required>
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-secondary calendar"
+                                                                (click)="d2.toggle()" type="button"><i
+                                                                    class="fa fa-calendar"></i></button>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <ng-template #footerTemplate2>
+                                                        <hr class="my-0">
+
+                                                        <button class="btn btn-secondary btn-sm m-2 float-right"
+                                                            (click)="d2.close()">Close</button>
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Upload</span>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                            <input type="file" accept="image/*"
+                                                                (change)="changeListener($event)"
+                                                                class="custom-file-input" name="photoProduit"
+                                                                id="inputGroupFile01">
+                                                            <label class="custom-file-label"
+                                                                for="inputGroupFile01">Choisir une photo</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="image">
+                                                        <img src="{{image}}" class="img-thumbnail" width="304"
+                                                            height="236" alt="">
+
+                                                    </div>
+
+                                                </td>
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="form-actions m-t-40">
+                        <button type="submit" class="btn btn-info m-r-5">
+                            Save</button>
+                        <button type="reset" class="btn btn-dark">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+
+
+<!-- new -->
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Do you want to confirm?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
+</ng-template>
+<!-- end new -->
+
+<!-- modal -->
+<ng-template #templateGamme>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter une gamme</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fGamme="ngForm" novalidate>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="inputLibelle" class="control-label col-form-label">Libellé gamme</label>
+                    <input type="text" class="form-control" name="libelleGamme" placeholder="Libellé"
+                        [(ngModel)]="libGamme">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="inputDescription" class="control-label col-form-label">Description
+                        gamme</label>
+                    <textarea class="form-control" name="descriptionGamme" [(ngModel)]="descriptionGamme"
+                        id="exampleTextarea10" rows="3" placeholder="Description"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info" [disabled]="!fGamme.valid" (click)="saveGamme()">Save</button>
+
+        <button type="button" class="btn btn-dark" (click)="decline()">Cancel</button>
+    </div>
+</ng-template>
+
+<ng-template #templateType>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter un type produit</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fType="ngForm" novalidate>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="inputLibelle" class="control-label col-form-label">Libellé type
+                        produit</label>
+                    <input type="text" class="form-control" name="libelle" [(ngModel)]="libTypes" placeholder="Libellé"
+                        required>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="inputDescription" class="control-label col-form-label">Description
+                        type produit</label>
+                    <textarea class="form-control" name="description" [(ngModel)]="descriptionTypes"
+                        id="exampleTextarea10" rows="3" placeholder="Description" required></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info" [disabled]="!fType.valid" (click)="saveType()">Save</button>
+
+        <button type="button" class="btn btn-dark" (click)="decline()">Cancel</button>
+    </div>
+</ng-template>
